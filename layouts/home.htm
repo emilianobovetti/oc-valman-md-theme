@@ -1,0 +1,156 @@
+description = "Home layout"
+
+[staticPage]
+useContent = 0
+default = 0
+
+[blogPosts]
+postsPerPage = 3
+sortOrder = "published_at desc"
+postPage = "post-by-slug"
+
+[viewBag]
+==
+
+{% partial 'site/head' styles = ['assets/node_modules/animate.css/animate.min.css'] %}
+{% partial 'site/nav/fixed' %}
+
+{variable name="title1" label="First Title" tab="Carousel" type="text"}{/variable}
+{variable name="tagline1" label="First Tagline" tab="Carousel" type="text"}{/variable}
+{variable name="carousel1" label="First Carousel Image" tab="Carousel" type="mediafinder" mode="image"}{/variable}
+
+{variable name="title2" label="Second Title" tab="Carousel" type="text"}{/variable}
+{variable name="tagline2" label="Second Tagline" tab="Carousel" type="text"}{/variable}
+{variable name="carousel2" label="Second Carousel Image" tab="Carousel" type="mediafinder" mode="image"}{/variable}
+
+{variable name="title3" label="Third Title" tab="Carousel" type="text"}{/variable}
+{variable name="tagline3" label="Third Tagline" tab="Carousel" type="text"}{/variable}
+{variable name="carousel3" label="Third Carousel Image" tab="Carousel" type="mediafinder" mode="image"}{/variable}
+
+<style>
+  .carousel-item {
+    background-size: cover;
+  }
+
+  #home-carousel .carousel-indicator {
+    cursor: pointer;
+    font-size: 30px;
+    bottom: 30%;
+    top: auto;
+  }
+
+  #carousel-left-indicator {
+    left: 5%;
+    right: auto;
+  }
+
+  #carousel-right-indicator {
+    right: 5%;
+    left: auto;
+  }
+
+  #first-slide {
+    background-image: url("{{ carousel1|media }}");
+  }
+
+  #second-slide {
+    background-image: url("{{ carousel2|media }}");
+  }
+
+  #third-slide {
+    background-image: url("{{ carousel3|media }}");
+  }
+</style>
+
+<main>
+  <div id="home-carousel" class="carousel carousel-slider center full-height-wo-nav">
+
+    <a id="carousel-left-indicator" class="carousel-fixed-item carousel-indicator">
+      <i class="fas fa-angle-left"></i>
+    </a>
+
+    <a id="carousel-right-indicator" class="carousel-fixed-item carousel-indicator">
+      <i class="fas fa-angle-right"></i>
+    </a>
+
+    <div class="carousel-item" id="first-slide" href="#first-slide">
+      <div class="caption center-align" data-animation="fadeInUp">
+        <h2>{{ title1 }}</h2>
+        <p class="white-text">{{ tagline1 }}</p>
+      </div>
+    </div>
+    <div class="carousel-item" id="second-slide" href="#second-slide">
+      <h2 data-animation="jackInTheBox slow">{{ title2 }}</h2>
+      <p class="white-text" data-animation="rollIn slow">{{ tagline2 }}</p>
+    </div>
+    <div class="carousel-item" id="third-slide" href="#third-slide">
+      <div class="caption center-align" data-animation="zoomIn">
+        <h2>{{ title3 }}</h2>
+        <p class="white-text">{{ tagline3 }}</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="container">
+    <h1>Last three</h1>
+    <hr>
+  </div>
+
+  {% set post = blogPosts.posts %}
+
+  {% partial 'home/preview-posts-in-staggered-card' %}
+
+</main>
+
+{% set script %}
+<script>
+  var animatedElements = [];
+
+  var filterAnimate = fpc.compose(fpc.filter, element.has.animation);
+
+  var carousel = M.Carousel.init(document.getElementById('home-carousel'), {
+    fullWidth: true,
+    indicators: true,
+    onCycleTo: function (elem) {
+      fpc.forEach(animatedElements, element.hide);
+
+      animatedElements = fpc.pipe(elem.childNodes)
+        .into(filterAnimate)
+        .then(fpc.map, element.show)
+        .then(fpc.map, element.animate)
+        .end;
+    }
+  });
+
+  fpc.pipe(carousel.images)
+    .into(fpc.slice, 1)
+    .then(fpc.map, function (carouselItem) {
+      return filterAnimate(carouselItem.childNodes);
+    })
+    .then(fpc.forEach, element.hide)
+    .end;
+
+  document
+    .getElementById('carousel-left-indicator')
+    .addEventListener('click', function (event) {
+      carousel.prev();
+    });
+
+  document
+    .getElementById('carousel-right-indicator')
+    .addEventListener('click', function (event) {
+      carousel.next();
+    });
+
+  setInterval(function () {
+    // TODO
+    //carousel.next();
+  }, 10000);
+</script>
+{% endset %}
+
+{% partial 'site/foot'
+  scripts = ['assets/js/element.js']
+  bottom = script
+%}

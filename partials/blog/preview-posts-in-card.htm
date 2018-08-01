@@ -1,0 +1,8 @@
+description = "All posts in card preview"
+
+[viewBag]
+==
+
+{% for post in posts %}
+  {% partial 'blog/preview-post-in-card' post = post %}
+{% endfor %}

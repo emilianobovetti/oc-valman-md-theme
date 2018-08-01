@@ -1,0 +1,33 @@
+title = "News"
+url = "/news/:category/:page?"
+layout = "base"
+is_hidden = 0
+robot_index = "index"
+robot_follow = "follow"
+
+[blogPosts]
+pageNumber = "{{ :page }}"
+categoryFilter = "{{ :category }}"
+postsPerPage = 2
+noPostsMessage = "No posts found"
+sortOrder = "published_at desc"
+categoryPage = "news-by-category"
+postPage = "post-by-slug"
+
+[blogCategories]
+displayEmpty = true
+slug = "{{ :category }}"
+categoryPage = "news-by-category"
+
+[viewBag]
+==
+
+{% set posts = blogPosts.posts %}
+
+{% partial 'blog/categories'
+  allCategoriesPage = 'all-news'
+  subCategoriesBySlug = 'news' %}
+
+{% partial 'blog/preview-posts-in-card' %}
+
+{% partial 'blog/pagination' %}

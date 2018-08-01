@@ -1,0 +1,32 @@
+description = "Post in card preview"
+
+[viewBag]
+==
+
+<div class="card blue-grey">
+  <div class="card-content">
+    <span class="card-title left">
+      {% for category in post.categories %}
+        {% partial 'blog/category/icon' category = category %}
+      {% endfor %}
+
+      {{ post.title }}
+    </span>
+    <span class="right">{{ post.published_at|date('d F Y') }}</span>
+  </div>
+
+  {% set image = post.featured_images.first %}
+
+  <div class="card-image">
+    <img src="{{ image.path }}" alt="{{ image.description }}">
+  </div>
+
+  <div class="card-content">
+    <p>{{ post.summary|raw }}</p>
+  </div>
+
+  <div class="card-action">
+    <a href="{{ post.url }}">Read more</a>
+  </div>
+
+</div>

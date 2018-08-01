@@ -1,0 +1,43 @@
+description = "Blog Pagination"
+==
+
+{% if posts.lastPage > 1 %}
+  <ul class="pagination center-align">
+
+    {% set prevButtonClass = '' %}
+    {% set prevButtonHref = this.page.baseFileName|page({ (pageParam): (posts.currentPage-1) }) %}
+
+    {% if posts.currentPage < 2 %}
+      {% set prevButtonClass = 'disabled' %}
+      {% set prevButtonHref = false %}
+    {% endif %}
+
+    <li class="{{ prevButtonClass }}">
+      <a {% if prevButtonHref %}href="{{ prevButtonHref }}"{% endif %}>
+        <i class="fas fa-angle-left"></i>
+      </a>
+    </li>
+
+    {% for page in 1..posts.lastPage %}
+      <li class="{{ posts.currentPage == page ? 'active' : 'waves-effect' }}">
+        <a href="{{ this.page.baseFileName|page({ (pageParam): page }) }}">
+          {{ page }}
+        </a>
+      </li>
+    {% endfor %}
+
+    {% set nextButtonClass = '' %}
+    {% set nextButtonHref = this.page.baseFileName|page({ (pageParam): (posts.currentPage+1) }) %}
+
+    {% if posts.lastPage <= posts.currentPage %}
+      {% set nextButtonClass = 'disabled' %}
+      {% set nextButtonHref = false %}
+    {% endif %}
+
+    <li class="{{ nextButtonClass }}">
+      <a {% if nextButtonHref %}href="{{ nextButtonHref }}"{% endif %}>
+        <i class="fas fa-angle-right"></i>
+      </a>
+    </li>
+  </ul>
+{% endif %}

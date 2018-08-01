@@ -1,0 +1,15 @@
+description = "No Sidebar"
+
+[staticPage]
+useContent = 1
+default = 1
+==
+
+{% partial 'site/head' %}
+{% partial 'site/nav/top' %}
+
+<main class="container">
+  {% page %}
+</main>
+
+{% partial 'site/foot' %}

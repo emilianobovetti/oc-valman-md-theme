@@ -1,0 +1,16 @@
+title = "Lista nozze"
+url = "/lista-nozze/:slug"
+layout = "base"
+is_hidden = 0
+robot_index = "index"
+robot_follow = "follow"
+
+[blogPost]
+slug = "{{ :slug }}"
+
+[viewBag]
+==
+
+{% set post = blogPost.post %}
+
+{% partial 'blog/full-post-in-card' %}

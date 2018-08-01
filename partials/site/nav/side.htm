@@ -1,0 +1,19 @@
+description = "Side nav"
+
+[viewBag]
+
+[staticMenu]
+code = "mainmenu"
+==
+
+<ul class="sidenav" id="mobile-menu">
+  <li class="{{ page.url == '/' ? 'active' : '' }}">
+    <a href="{{ '/'|app }}">Home</a>
+  </li>
+
+  {% for item in staticMenu.menuItems %}
+    <li class="{{ item.isActive or item.isChildActive ? 'active' : '' }}">
+      <a href="{{ item.url }}">{{ item.title }}</a>
+    </li>
+  {% endfor %}
+</ul>

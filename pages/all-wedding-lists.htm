@@ -1,0 +1,19 @@
+title = "Liste nozze"
+url = "/liste-nozze/:page?"
+layout = "base"
+is_hidden = 0
+
+[blogPosts]
+pageNumber = "{{ :page }}"
+categoryFilter = "lista-nozze"
+postsPerPage = 2
+noPostsMessage = "No posts found"
+sortOrder = "published_at desc"
+postPage = "wedding-list-by-slug"
+==
+
+{% set posts = blogPosts.posts %}
+
+{% partial 'blog/preview-posts-in-card' %}
+
+{% partial 'blog/pagination' %}

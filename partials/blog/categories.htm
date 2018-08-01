@@ -1,0 +1,57 @@
+description = "Blog Categories"
+
+[viewBag]
+==
+
+<!--
+  -- Variables: categories, currentCategorySlug, subCategoriesBySlug
+  -->
+
+{% if categories %}
+
+  {% if subCategoriesBySlug %}
+    {% for category in categories %}
+      {% if category.slug == subCategoriesBySlug %}
+        {% set categories = category.children %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+
+  <h4>Categories:</h4>
+
+  <div class="collection">
+    {% set totalCount = 0 %}
+
+    {% for category in categories %}
+
+      {% set postCount = category.post_count %}
+      {% set totalCount = totalCount + postCount %}
+
+      <a
+        class="collection-item {% if category.slug == currentCategorySlug %}active{% endif %}"
+        href="{{ categoryPage|page({ category: category.slug, page: 1 }) }}">
+          {% partial 'blog/category/icon' category = category %}
+
+          {{ category.name }}
+
+          {% if postCount %}
+            <span class="badge">{{ postCount }}</span>
+          {% endif %}
+      </a>
+
+    {% endfor %}
+
+    {% if allCategoriesPage %}
+      <a
+        class="collection-item"
+        href="{{ allCategoriesPage|page }}">
+          <i class="fas fa-angle-left"></i>Tutte
+
+          {% if totalCount %}
+            <span class="badge">{{ totalCount }}</span>
+          {% endif %}
+      </a>
+    {% endif %}
+  </div>
+
+{% endif %}

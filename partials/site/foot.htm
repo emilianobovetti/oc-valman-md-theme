@@ -1,0 +1,72 @@
+description = "Foot"
+
+[viewBag]
+
+[Agent]
+==
+
+<footer class="page-footer grey-text text-darken-4">
+
+  <div class="container">
+    <div class="row">
+      <div class="col s12 m7 l5">
+        <h5>Valman Viaggi di<br> Daniele Colucci</h5>
+        <p>Via Cervia 43/I</p>
+        <p>00054 Fregene (Rm)</p>
+        <p>P. IVA 02904110737</p>
+      </div>
+
+      <hr class="col s12 hide-on-med-and-up">
+
+      <div class="col s12 m5 l4">
+        <h5>Contatti</h5>
+        <p>
+          <a href="https://{{ Agent.isMobile() ? 'api' : 'web' }}.whatsapp.com/send?phone=390666564815" target="_blank" class="contact-phone">
+            <i class="fab fa-whatsapp"></i>
+            <i class="contact-slash">/</i>
+            <i class="fas fa-phone"></i>
+            0666564815
+          </a>
+        </p>
+        <p>
+          <a href="mailto:info@valmanviaggi.it" class="contact-email">
+            <i class="fas fa-envelope"></i>
+            info@valmanviaggi.it
+          </a>
+        </p>
+      </div>
+
+      <hr class="col s12 hide-on-med-and-up">
+
+      <div class="col s12 m6 l3">
+        <p>Autorizzazione con determina dirigenziale della Provincia di Roma n° 5145 del 16/09/2014</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-copyright">
+    <div class="container">
+      <p class="center-align">© {{ 'now'|date('Y') }} <a href="https://github.com/emilianobovetti">bobbermaist</a></p>
+    </div>
+  </div>
+
+</footer>
+
+{% set defaults = [
+    'assets/node_modules/materialize-css/dist/js/materialize.min.js',
+    'assets/node_modules/fpc/dist/fpc.min.js',
+  ]
+%}
+
+{% set scripts = defaults|merge(scripts ? scripts : []) %}
+
+<script src="{{ scripts|theme }}"></script>
+
+<script>
+  M.Sidenav.init(document.getElementById('mobile-menu'));
+</script>
+
+{{ bottom }}
+
+</body>
+</html>

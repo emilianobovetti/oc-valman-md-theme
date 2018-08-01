@@ -1,0 +1,87 @@
+@charset "UTF-8";
+
+$assets-path: "..";
+$fonts-path: "#{$assets-path}/fonts";
+$node-modules-path: "#{$assets-path}/node_modules";
+$materialize-sass-path: "#{$node-modules-path}/materialize-css/sass";
+$materialize-components-path: "#{$materialize-sass-path}/components";
+
+// Color
+@import "#{$materialize-components-path}/color-variables";
+@import "#{$materialize-components-path}/color-classes";
+
+// Variables;
+@import "#{$materialize-components-path}/variables";
+
+// Reset
+@import "#{$materialize-components-path}/normalize";
+
+// components
+@import "#{$materialize-components-path}/global";
+@import "#{$materialize-components-path}/badges";
+//@import "#{$materialize-components-path}/icons-material-design";
+@import "#{$materialize-components-path}/grid";
+@import "#{$materialize-components-path}/navbar";
+@import "#{$materialize-components-path}/typography";
+@import "#{$materialize-components-path}/transitions";
+@import "#{$materialize-components-path}/cards";
+//@import "#{$materialize-components-path}/toast";
+//@import "#{$materialize-components-path}/tabs";
+//@import "#{$materialize-components-path}/tooltip";
+@import "#{$materialize-components-path}/buttons";
+@import "#{$materialize-components-path}/dropdown";
+@import "#{$materialize-components-path}/waves";
+@import "#{$materialize-components-path}/modal";
+@import "#{$materialize-components-path}/collapsible";
+@import "#{$materialize-components-path}/chips";
+@import "#{$materialize-components-path}/materialbox";
+//@import "#{$materialize-components-path}/forms/forms";
+@import "#{$materialize-components-path}/table_of_contents";
+@import "#{$materialize-components-path}/sidenav";
+//@import "#{$materialize-components-path}/preloader";
+//@import "#{$materialize-components-path}/slider";
+@import "#{$materialize-components-path}/carousel";
+@import "#{$materialize-components-path}/tapTarget";
+@import "#{$materialize-components-path}/pulse";
+//@import "#{$materialize-components-path}/datepicker";
+//@import "#{$materialize-components-path}/timepicker";
+
+@import "core/typography";
+
+.full-height {
+  height: 100vh;
+}
+
+.full-height-wo-nav {
+  height: 531px;
+  height: calc(100vh - #{$navbar-height-mobile});
+
+  @media #{$medium-and-up} {
+    height: calc(100vh - #{$navbar-height});
+  }
+}
+
+.fas.fa-phone,
+.fab.fa-whatsapp,
+.fas.fa-envelope {
+  color: #0ec244;
+}
+
+.nav-logo {
+  height: $navbar-height-mobile;
+
+  @media #{$medium-and-up} {
+    height: $navbar-height;
+  }
+}
+
+.nav-logo img {
+  height: 100%;
+  padding: 4px;
+}
+
+@media #{$large-and-up} {
+  .nav-extended {
+    //background-color: transparent;
+  }
+}

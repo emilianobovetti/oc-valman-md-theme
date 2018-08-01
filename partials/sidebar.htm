@@ -1,0 +1,10 @@
+description = "The Sidebar"
+
+[viewBag]
+==
+
+{% if this.page.id == 'post' %}
+  {% partial 'blog/categories' %}
+{% else %}
+  {% partial 'side-menu' %}
+{% endif %}

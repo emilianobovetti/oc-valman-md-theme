@@ -1,0 +1,50 @@
+name: MainMenu
+items:
+    -
+        title: 'Chi siamo'
+        nesting: '0'
+        type: static-page
+        url: ''
+        code: ''
+        reference: chi-siamo
+        cmsPage: ''
+        replace: '0'
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: 'Liste nozze'
+        type: cms-page
+        code: ''
+        reference: all-wedding-lists
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: News
+        nesting: ''
+        type: cms-page
+        url: ''
+        code: ''
+        reference: all-news
+        cmsPage: ''
+        replace: ''
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: Cataloghi
+        nesting: '0'
+        type: static-page
+        url: ''
+        code: ''
+        reference: cataloghi
+        cmsPage: ''
+        replace: '0'
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
