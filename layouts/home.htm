@@ -12,7 +12,7 @@ postPage = "post-by-slug"
 [viewBag]
 ==
 
-{% partial 'site/head' styles = ['assets/node_modules/animate.css/animate.min.css'] %}
+{% partial 'site/head' %}
 {% partial 'site/nav/fixed' %}
 
 {variable name="title1" label="First Title" tab="Carousel" type="text"}{/variable}
@@ -150,7 +150,4 @@ postPage = "post-by-slug"
 </script>
 {% endset %}
 
-{% partial 'site/foot'
-  scripts = ['assets/js/element.js']
-  bottom = script
-%}
+{% partial 'site/foot' bottom = script %}

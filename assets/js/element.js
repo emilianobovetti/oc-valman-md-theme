@@ -3,6 +3,9 @@
   root.element = factory();
 
 }(this, function () {
+  var div = document.createElement('div');
+  var classList = div.classList;
+
   var animationEnd = (function(div) {
     var animations = {
       animation: 'animationend',
@@ -16,7 +19,7 @@
         return animations[key];
       }
     }
-  })(document.createElement('div'));
+  }(div));
 
   var get = {}, has = {}, add = {}, rem = {};
 
@@ -50,41 +53,52 @@
     }, []);
   }
 
-  function collectionHandler (collection, action, classes) {
-    fpc.forEach(collection, function (elem) {
-      action.apply(null, fpc.unshift(classes, elem));
+  function toArray (val) {
+    return fpc.is.reduceable(val) ? fpc.slice(val) : [ val ];
+  }
+
+  add.class = function (elems) {
+    var classes = fpc.slice(arguments, 1);
+
+    toArray(elems).forEach(function (elem) {
+      classList.add.apply(elem.classList, splitClasses(classes));
     });
-  }
 
-  add.class = function (elem) {
-    var classes = fpc.slice(arguments, 1);
-
-    fpc.is.reduceable(elem)
-      ? collectionHandler(elem, add.class, classes)
-      : elem.classList.add.apply(elem.classList, splitClasses(classes));
-
-    return elem;
+    return elems;
   };
 
-  rem.class = function (elem) {
+  rem.class = function (elems) {
     var classes = fpc.slice(arguments, 1);
 
-    fpc.is.reduceable(elem)
-      ? collectionHandler(elem, rem.class, classes)
-      : elem.classList.remove.apply(elem.classList, splitClasses(classes));
+    toArray(elems).forEach(function (elem) {
+      classList.remove.apply(elem.classList, splitClasses(classes));
+    });
 
-    return elem;
+    return elems;
   };
 
-  function hide (elem) {
-    return add.class(elem, 'hide');
+  function hide (elems) {
+    toArray(elems).forEach(function (elem) {
+      elem.style.visibility = 'hidden';
+    });
+
+    return elems;
   }
 
-  function show (elem) {
-    return rem.class(elem, 'hide');
+  function show (elems) {
+    toArray(elems).forEach(function (elem) {
+      elem.style.visibility = '';
+    });
+
+    return elems;
   }
 
   function animate (elem) {
+    if (fpc.is.reduceable(elem)) {
+      fpc.forEach(elem, animate);
+      return elem;
+    }
+
     var animation = get.animation(elem);
 
     if (has.animation(elem)) {
@@ -97,6 +111,67 @@
 
     return elem;
   }
+
+  var scrollHandlerStarted = false;
+
+  var checkScheduled = false;
+
+  var toAnimateOnScroll = [];
+
+  function isVisible (elem) {
+    var elemRect = elem.getBoundingClientRect();
+
+    return elemRect.top < window.innerHeight && elemRect.bottom > 0;
+  }
+
+  function animateVisibleElems () {
+    var elems = fpc.reduce(toAnimateOnScroll, function (acc, elem) {
+      isVisible(elem) ? acc.visible.push(elem) : acc.nonVisible.push(elem);
+
+      return acc;
+    }, { visible: [], nonVisible: [] });
+
+    fpc.pipe(elems.visible)
+      .into(show)
+      .then(animate);
+
+    toAnimateOnScroll = elems.nonVisible;
+
+    checkScheduled = false;
+  }
+
+  function scrollHandler () {
+    if (!checkScheduled) {
+      if (toAnimateOnScroll.length > 0) {
+        setTimeout(animateVisibleElems, 300);
+
+        checkScheduled = true;
+      } else {
+        window.removeEventListener('scroll', scrollHandler, false);
+      }
+    }
+  }
+
+  function startScrollHandler () {
+    scrollHandlerStarted = true;
+
+    window.addEventListener('scroll', scrollHandler, false);
+
+    animateVisibleElems();
+  }
+
+  animate.onScroll = function (elems) {
+    var toAdd = fpc.pipe(elems)
+      .into(toArray)
+      .then(hide)
+      .end;
+
+    toAnimateOnScroll = toAnimateOnScroll.concat(toAdd);
+
+    if (toAnimateOnScroll.length > 0 && !scrollHandlerStarted) {
+      startScrollHandler();
+    }
+  };
 
   return {
     get: get,

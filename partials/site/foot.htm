@@ -55,6 +55,7 @@ description = "Foot"
 {% set defaults = [
     'assets/node_modules/materialize-css/dist/js/materialize.min.js',
     'assets/node_modules/fpc/dist/fpc.min.js',
+    'assets/js/element.js',
   ]
 %}
 
@@ -64,6 +65,8 @@ description = "Foot"
 
 <script>
   M.Sidenav.init(document.getElementById('mobile-menu'));
+
+  element.animate.onScroll(document.querySelectorAll('.show-on-scroll'));
 </script>
 
 {{ bottom }}
