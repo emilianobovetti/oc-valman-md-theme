@@ -10,10 +10,6 @@ animate.css@^3.7.0:
   version "3.7.0"
   resolved "https://registry.yarnpkg.com/animate.css/-/animate.css-3.7.0.tgz#5de25d1ee5fba11ba6a1e2c4fa568f512eb7d4da"
 
-fpc@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/fpc/-/fpc-1.1.0.tgz#c84bf5aadea9de5208ade8230bb960c6f84f2d1e"
-
 materialize-css@^1.0.0-rc.2:
   version "1.0.0-rc.2"
   resolved "https://registry.yarnpkg.com/materialize-css/-/materialize-css-1.0.0-rc.2.tgz#b9e6b18f698c6ef77bb6b628d59147faf131eff5"

@@ -3,35 +3,75 @@
   root.element = factory();
 
 }(this, function () {
-  var div = document.createElement('div');
-  var classList = div.classList;
-
-  var animationEnd = (function(div) {
-    var animations = {
-      animation: 'animationend',
-      OAnimation: 'oAnimationEnd',
-      MozAnimation: 'mozAnimationEnd',
-      WebkitAnimation: 'webkitAnimationEnd'
-    };
-
-    for (var key in animations) {
-      if (div.style[key] !== undefined) {
-        return animations[key];
-      }
-    }
-  }(div));
-
   var get = {}, has = {}, add = {}, rem = {};
 
+  var div = document.createElement('div');
+
+  var classList = div.classList;
+
+  var animationEnd =
+        div.style.animation != null ? 'animationend'
+      : div.style.OAnimation != null ? 'oAnimationEnd'
+      : div.style.MozAnimation != null ? 'mozAnimationEnd'
+      : div.style.WebkitAnimation != null ? 'webkitAnimationEnd'
+      : undefined;
+
+  function prop (val, key) {
+    if (val != null) return val[key]
+  }
+
+  function isEmpty (val) {
+    return val == null || val.length === 0;
+  }
+
+  function nonEmpty (val) {
+    return !isEmpty(val);
+  }
+
+  function isFunction (val) {
+    return typeof val === 'function';
+  }
+
+  function isList (val) {
+    return val != null
+      && isFunction(val.forEach)
+      && isFunction(val.reduce)
+      && isFunction(val.map);
+  }
+
+  function isCollection (val) {
+    return val != null
+      && typeof val.length === 'number'
+      && val.hasOwnProperty(0);
+  }
+
+  function toList (val) {
+    return isEmpty(val) ? []
+      : isList(val) ? val
+      : isCollection(val) ? slice(val)
+      : [ val ];
+  }
+
+  function slice (val, b, e) {
+    var toSlice, begin, end;
+
+    if (val == null) {
+      return val;
+    }
+
+    end = arguments.length < 3 ? val.length : e;
+    begin = arguments.length < 2 ? 0 : b;
+    toSlice = typeof val === 'string' ? val.split('') : val;
+
+    return [].slice.call(toSlice, begin, end);
+  }
+
   get.dataset = function (elem) {
-    return fpc.prop(elem, 'dataset');
+    return prop(elem, 'dataset');
   };
 
   get.animation = function (elem) {
-    return fpc.pipe(elem)
-      .into(get.dataset)
-      .then(fpc.prop, 'animation')
-      .end;
+    return prop(get.dataset(elem), 'animation');
   };
 
   has.dataset = function (elem) {
@@ -41,26 +81,22 @@
   has.animation = function (elem) {
     var animation = get.animation(elem);
 
-    return fpc.is.str(animation) && animation.length > 0;
+    return typeof animation === 'string' && animation.length > 0;
   };
 
   /*
    * [ 'class1 class2', 'class3' ] => [ 'class1', 'class2', 'class3' ]
    */
   function splitClasses (classes) {
-    return fpc.reduce(classes, function (acc, cl) {
-      return acc.concat(cl.split(' '));
+    return classes.reduce(function (acc, cl) {
+      return acc.concat(cl.split(' ').filter(nonEmpty));
     }, []);
   }
 
-  function toArray (val) {
-    return fpc.is.reduceable(val) ? fpc.slice(val) : [ val ];
-  }
-
   add.class = function (elems) {
-    var classes = fpc.slice(arguments, 1);
+    var classes = slice(arguments, 1);
 
-    toArray(elems).forEach(function (elem) {
+    toList(elems).forEach(function (elem) {
       classList.add.apply(elem.classList, splitClasses(classes));
     });
 
@@ -68,9 +104,9 @@
   };
 
   rem.class = function (elems) {
-    var classes = fpc.slice(arguments, 1);
+    var classes = slice(arguments, 1);
 
-    toArray(elems).forEach(function (elem) {
+    toList(elems).forEach(function (elem) {
       classList.remove.apply(elem.classList, splitClasses(classes));
     });
 
@@ -78,7 +114,7 @@
   };
 
   function hide (elems) {
-    toArray(elems).forEach(function (elem) {
+    toList(elems).forEach(function (elem) {
       elem.style.visibility = 'hidden';
     });
 
@@ -86,68 +122,67 @@
   }
 
   function show (elems) {
-    toArray(elems).forEach(function (elem) {
+    toList(elems).forEach(function (elem) {
       elem.style.visibility = '';
     });
 
     return elems;
   }
 
-  function animate (elem) {
-    if (fpc.is.reduceable(elem)) {
-      fpc.forEach(elem, animate);
-      return elem;
+  function animate (elems) {
+    if (isList(elems)) {
+      elems.forEach(animate);
+
+      return elems;
     }
 
-    var animation = get.animation(elem);
+    var animation = get.animation(elems);
 
-    if (has.animation(elem)) {
-      add.class(elem, 'animated', animation);
+    if (has.animation(elems)) {
+      add.class(elems, 'animated', animation);
 
-      elem.addEventListener(animationEnd, function () {
-        rem.class(elem, animation);
+      elems.addEventListener(animationEnd, function () {
+        rem.class(elems, animation);
       });
     }
 
-    return elem;
+    return elems;
   }
 
   var scrollHandlerStarted = false;
 
   var checkScheduled = false;
 
-  var toAnimateOnScroll = [];
+  var animateWhenInView = [];
 
-  function isVisible (elem) {
+  function isInViewport (elem) {
     var elemRect = elem.getBoundingClientRect();
 
     return elemRect.top < window.innerHeight && elemRect.bottom > 0;
   }
 
-  function animateVisibleElems () {
-    var elems = fpc.reduce(toAnimateOnScroll, function (acc, elem) {
-      isVisible(elem) ? acc.visible.push(elem) : acc.nonVisible.push(elem);
+  function animateElemsInView () {
+    var elems = animateWhenInView.reduce(function (acc, elem) {
+      isInViewport(elem) ? acc.inView.push(elem) : acc.notInView.push(elem);
 
       return acc;
-    }, { visible: [], nonVisible: [] });
+    }, { inView: [], notInView: [] });
 
-    fpc.pipe(elems.visible)
-      .into(show)
-      .then(animate);
+    animate(show(elems.inView));
 
-    toAnimateOnScroll = elems.nonVisible;
+    animateWhenInView = elems.notInView;
 
     checkScheduled = false;
   }
 
   function scrollHandler () {
     if (!checkScheduled) {
-      if (toAnimateOnScroll.length > 0) {
-        setTimeout(animateVisibleElems, 300);
+      if (animateWhenInView.length > 0) {
+        setTimeout(animateElemsInView, 300);
 
         checkScheduled = true;
       } else {
-        window.removeEventListener('scroll', scrollHandler, false);
+        stopScrollHandler();
       }
     }
   }
@@ -157,18 +192,19 @@
 
     window.addEventListener('scroll', scrollHandler, false);
 
-    animateVisibleElems();
+    setTimeout(animateElemsInView, 300);
   }
 
-  animate.onScroll = function (elems) {
-    var toAdd = fpc.pipe(elems)
-      .into(toArray)
-      .then(hide)
-      .end;
+  function stopScrollHandler () {
+    scrollHandlerStarted = false;
 
-    toAnimateOnScroll = toAnimateOnScroll.concat(toAdd);
+    window.removeEventListener('scroll', scrollHandler, false);
+  }
 
-    if (toAnimateOnScroll.length > 0 && !scrollHandlerStarted) {
+  animate.whenInView = function (elems) {
+    animateWhenInView = animateWhenInView.concat(hide(toList(elems)));
+
+    if (animateWhenInView.length > 0 && !scrollHandlerStarted) {
       startScrollHandler();
     }
   };

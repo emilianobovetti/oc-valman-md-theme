@@ -16,6 +16,9 @@ $materialize-components-path: "#{$materialize-sass-path}/components";
 // Reset
 @import "#{$materialize-components-path}/normalize";
 
+$primary-color: #3858a8;
+$footer-bg-color: $primary-color;
+
 // components
 @import "#{$materialize-components-path}/global";
 @import "#{$materialize-components-path}/badges";
