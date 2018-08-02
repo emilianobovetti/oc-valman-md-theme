@@ -107,29 +107,26 @@ postPage = "post-by-slug"
 <script>
   var animatedElements = [];
 
-  var filterAnimate = fpc.compose(fpc.filter, element.has.animation);
-
   var carousel = M.Carousel.init(document.getElementById('home-carousel'), {
     fullWidth: true,
     indicators: true,
     onCycleTo: function (elem) {
-      fpc.forEach(animatedElements, element.hide);
+      animatedElements.forEach(element.hide);
 
-      animatedElements = fpc.pipe(elem.childNodes)
-        .into(filterAnimate)
-        .then(fpc.map, element.show)
-        .then(fpc.map, element.animate)
-        .end;
+      animatedElements = element.util.slice(elem.childNodes)
+        .filter(element.has.data.animation)
+        .map(element.show)
+        .map(element.animate);
     }
   });
 
-  fpc.pipe(carousel.images)
-    .into(fpc.slice, 1)
-    .then(fpc.map, function (carouselItem) {
-      return filterAnimate(carouselItem.childNodes);
+  carousel.images
+    .slice(1)
+    .map(function (carouselItem) {
+      return element.util.slice(carouselItem.childNodes)
+        .filter(element.has.data.animation);
     })
-    .then(fpc.forEach, element.hide)
-    .end;
+    .forEach(element.hide);
 
   document
     .getElementById('carousel-left-indicator')

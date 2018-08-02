@@ -28,27 +28,24 @@
     return !isEmpty(val);
   }
 
-  function isFunction (val) {
-    return typeof val === 'function';
-  }
-
-  function isList (val) {
-    return val != null
-      && isFunction(val.forEach)
-      && isFunction(val.reduce)
-      && isFunction(val.map);
-  }
-
   function isCollection (val) {
     return val != null
+      && typeof val.forEach === 'function'
+      && typeof val.filter === 'function'
+      && typeof val.reduce === 'function'
+      && typeof val.map === 'function';
+  }
+
+  function isIterable (val) {
+    return val != null
       && typeof val.length === 'number'
-      && val.hasOwnProperty(0);
+      && (val.hasOwnProperty(0) || val.length === 0);
   }
 
   function toList (val) {
     return isEmpty(val) ? []
-      : isList(val) ? val
-      : isCollection(val) ? slice(val)
+      : isCollection(val) ? val
+      : isIterable(val) ? slice(val)
       : [ val ];
   }
 
@@ -66,22 +63,23 @@
     return [].slice.call(toSlice, begin, end);
   }
 
-  get.dataset = function (elem) {
+  get.data = function (elem) {
     return prop(elem, 'dataset');
   };
 
-  get.animation = function (elem) {
-    return prop(get.dataset(elem), 'animation');
+  get.data.animation = function (elem) {
+    return prop(get.data(elem), 'animation');
   };
 
-  has.dataset = function (elem) {
-    return get.dataset(elem) != null;
+  has.data = function (elem) {
+    return typeof get.data(elem) === 'object';
   };
 
-  has.animation = function (elem) {
-    var animation = get.animation(elem);
+  has.data.animation = function (elem) {
+    var animation = get.data.animation(elem);
 
-    return typeof animation === 'string' && animation.length > 0;
+    return typeof animation === 'string'
+      && nonEmpty(animation);
   };
 
   /*
@@ -130,15 +128,11 @@
   }
 
   function animate (elems) {
-    if (isList(elems)) {
-      elems.forEach(animate);
+    if (isIterable(elems)) {
+      toList(elems).forEach(animate);
+    } else {
+      var animation = get.data.animation(elems) || 'fadeIn';
 
-      return elems;
-    }
-
-    var animation = get.animation(elems);
-
-    if (has.animation(elems)) {
       add.class(elems, 'animated', animation);
 
       elems.addEventListener(animationEnd, function () {
@@ -162,28 +156,30 @@
   }
 
   function animateElemsInView () {
-    var elems = animateWhenInView.reduce(function (acc, elem) {
-      isInViewport(elem) ? acc.inView.push(elem) : acc.notInView.push(elem);
+    var elemsInView = [], elemsNotInView = [];
 
-      return acc;
-    }, { inView: [], notInView: [] });
+    animateWhenInView.forEach(function (elem) {
+      isInViewport(elem) ? elemsInView.push(elem) : elemsNotInView.push(elem);
+    });
 
-    animate(show(elems.inView));
+    animate(show(elemsInView));
 
-    animateWhenInView = elems.notInView;
+    animateWhenInView = elemsNotInView;
 
     checkScheduled = false;
   }
 
   function scrollHandler () {
-    if (!checkScheduled) {
-      if (animateWhenInView.length > 0) {
-        setTimeout(animateElemsInView, 300);
+    if (checkScheduled) {
+      return;
+    }
 
-        checkScheduled = true;
-      } else {
-        stopScrollHandler();
-      }
+    if (animateWhenInView.length > 0) {
+      setTimeout(animateElemsInView, 200);
+
+      checkScheduled = true;
+    } else {
+      stopScrollHandler();
     }
   }
 
@@ -192,7 +188,7 @@
 
     window.addEventListener('scroll', scrollHandler, false);
 
-    setTimeout(animateElemsInView, 300);
+    setTimeout(animateElemsInView, 200);
   }
 
   function stopScrollHandler () {
@@ -216,6 +212,11 @@
     rem: rem,
     hide: hide,
     show: show,
-    animate: animate
+    animate: animate,
+    isInViewport: isInViewport,
+
+    util: {
+      slice: slice
+    }
   };
 }));
