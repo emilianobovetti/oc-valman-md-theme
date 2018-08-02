@@ -42,25 +42,17 @@
       && (val.hasOwnProperty(0) || val.length === 0);
   }
 
+  function slice (val, begin, end) {
+    return isEmpty(val) ? []
+      : typeof val === 'string' ? val.split('')
+      : [].slice.call(val, begin, arguments.length < 3 ? val.length : end);
+  }
+
   function toList (val) {
     return isEmpty(val) ? []
       : isCollection(val) ? val
       : isIterable(val) ? slice(val)
       : [ val ];
-  }
-
-  function slice (val, b, e) {
-    var toSlice, begin, end;
-
-    if (val == null) {
-      return val;
-    }
-
-    end = arguments.length < 3 ? val.length : e;
-    begin = arguments.length < 2 ? 0 : b;
-    toSlice = typeof val === 'string' ? val.split('') : val;
-
-    return [].slice.call(toSlice, begin, end);
   }
 
   get.data = function (elem) {
@@ -83,9 +75,9 @@
   };
 
   /*
-   * [ 'class1 class2', 'class3' ] => [ 'class1', 'class2', 'class3' ]
+   * [ 'class1  class2', 'class3 ' ] -> [ 'class1', 'class2', 'class3' ]
    */
-  function splitClasses (classes) {
+  function normalizeClasses (classes) {
     return classes.reduce(function (acc, cl) {
       return acc.concat(cl.split(' ').filter(nonEmpty));
     }, []);
@@ -95,7 +87,7 @@
     var classes = slice(arguments, 1);
 
     toList(elems).forEach(function (elem) {
-      classList.add.apply(elem.classList, splitClasses(classes));
+      classList.add.apply(elem.classList, normalizeClasses(classes));
     });
 
     return elems;
@@ -105,7 +97,7 @@
     var classes = slice(arguments, 1);
 
     toList(elems).forEach(function (elem) {
-      classList.remove.apply(elem.classList, splitClasses(classes));
+      classList.remove.apply(elem.classList, normalizeClasses(classes));
     });
 
     return elems;
@@ -127,16 +119,21 @@
     return elems;
   }
 
+  var config = {
+    defaultAnimation: 'fadeIn',
+    animateClass: 'animated'
+  };
+
   function animate (elems) {
     if (isIterable(elems)) {
       toList(elems).forEach(animate);
     } else {
-      var animation = get.data.animation(elems) || 'fadeIn';
+      var animationClass = get.data.animation(elems) || config.defaultAnimation;
 
-      add.class(elems, 'animated', animation);
+      add.class(elems, config.animateClass, animationClass);
 
       function removeAnimation () {
-        rem.class(elems, 'animated', animation);
+        rem.class(elems, config.animateClass, animationClass);
 
         elems.removeEventListener(animationEnd, removeAnimation, false);
       }
@@ -151,7 +148,7 @@
 
   var checkScheduled = false;
 
-  var animateWhenInView = [];
+  var animateOnScroll = [];
 
   function isInViewport (elem) {
     var elemRect = elem.getBoundingClientRect();
@@ -178,11 +175,11 @@
   }
 
   function animateElemsInView () {
-    var elems = groupByViewport(animateWhenInView);
+    var elems = groupByViewport(animateOnScroll);
 
     animate(show(elems.inView));
 
-    animateWhenInView = elems.notInView;
+    animateOnScroll = elems.notInView;
 
     checkScheduled = false;
   }
@@ -198,7 +195,7 @@
       return;
     }
 
-    if (animateWhenInView.length > 0) {
+    if (animateOnScroll.length > 0) {
       scheduleElemsCheck();
     } else {
       stopScrollHandler();
@@ -219,10 +216,10 @@
     window.removeEventListener('scroll', scrollHandler, false);
   }
 
-  animate.whenInView = function (elems) {
-    animateWhenInView = animateWhenInView.concat(hide(toList(elems)));
+  animate.onScroll = function (elems) {
+    animateOnScroll = animateOnScroll.concat(hide(toList(elems)));
 
-    if (animateWhenInView.length > 0 && !scrollHandlerStarted) {
+    if (animateOnScroll.length > 0 && !scrollHandlerStarted) {
       startScrollHandler();
     }
   };
