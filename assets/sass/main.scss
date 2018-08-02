@@ -83,8 +83,35 @@ $footer-bg-color: $primary-color;
   padding: 4px;
 }
 
+.nav-contacts {
+  position: absolute;
+  text-align: center;
+  right: 0;
+  left: 0;
+
+  li {
+    display: inline;
+    float: none;
+  }
+}
+
 @media #{$large-and-up} {
+  .nav-contacts {
+    position: initial;
+    float: right;
+  }
+
   .nav-extended {
+    // TODO
     //background-color: transparent;
   }
+}
+
+.contact-email {
+  text-transform: none;
+}
+
+.btn .fab,
+.btn .fas {
+  line-height: inherit;
 }

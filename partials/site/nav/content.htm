@@ -10,30 +10,6 @@ code = "mainmenu"
 
 <nav class="nav-extended">
   <div class="nav-wrapper">
-    <!--
-    <ul class="navbar-nav list-inline navbar-contacts">
-      <li class="nav-item list-inline-item">
-        <a
-          href="https://{{ Agent.isMobile() ? 'api' : 'web' }}.whatsapp.com/send?phone=390666564815"
-          target="_blank"
-          class="contact-phone btn btn-outline">
-            <i class="fab fa-whatsapp"></i>
-            <i class="contact-slash">/</i>
-            <i class="fas fa-phone"></i>
-            0666564815
-        </a>
-      </li>
-
-      <li class="nav-item list-inline-item d-none d-sm-block">
-        <a7
-          href="mailto:info@valmanviaggi.it"
-          class="contact-email btn btn-outline">
-            <i class="fas fa-envelope"></i>
-            info@valmanviaggi.it
-        </a>
-      </li>
-    </ul>
-    -->
 
     <a class="left nav-logo" href="{{ '/'|app }}">
       <img src="{{ 'logo-valman.png'|media }}">
@@ -45,6 +21,29 @@ code = "mainmenu"
           <a href="{{ item.url }}">{{ item.title }}</a>
         </li>
       {% endfor %}
+    </ul>
+
+    <ul class="nav-contacts">
+      <li>
+        <a
+          href="https://{{ Agent.isMobile() ? 'api' : 'web' }}.whatsapp.com/send?phone=390666564815"
+          target="_blank"
+          class="btn waves-effect waves-light contact-phone">
+            <i class="fab fa-whatsapp"></i>
+            <span class="contact-slash">/</span>
+            <i class="fas fa-phone"></i>
+            0666564815
+        </a>
+      </li>
+
+      <li class="hide-on-small-only">
+        <a
+          href="mailto:info@valmanviaggi.it"
+          class="btn waves-effect waves-light contact-email">
+            <i class="fas fa-envelope"></i>
+            info@valmanviaggi.it
+        </a>
+      </li>
     </ul>
 
     <a href="#" data-target="mobile-menu" class="right sidenav-trigger">
