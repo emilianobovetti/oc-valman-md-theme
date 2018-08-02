@@ -135,9 +135,13 @@
 
       add.class(elems, 'animated', animation);
 
-      elems.addEventListener(animationEnd, function () {
-        rem.class(elems, animation);
-      });
+      function removeAnimation () {
+        rem.class(elems, 'animated', animation);
+
+        elems.removeEventListener(animationEnd, removeAnimation, false);
+      }
+
+      elems.addEventListener(animationEnd, removeAnimation, false);
     }
 
     return elems;
@@ -152,21 +156,41 @@
   function isInViewport (elem) {
     var elemRect = elem.getBoundingClientRect();
 
-    return elemRect.top < window.innerHeight && elemRect.bottom > 0;
+    return elemRect.bottom >= 0
+      && elemRect.left >= 0
+      && elemRect.top <= window.innerHeight
+      && elemRect.right <= window.innerWidth;
+  }
+
+  function groupByViewport (elems) {
+    var selection = {
+      inView: [],
+      notInView: []
+    };
+
+    toList(elems).forEach(function (elem) {
+      isInViewport(elem)
+        ? selection.inView.push(elem)
+        : selection.notInView.push(elem);
+    });
+
+    return selection;
   }
 
   function animateElemsInView () {
-    var elemsInView = [], elemsNotInView = [];
+    var elems = groupByViewport(animateWhenInView);
 
-    animateWhenInView.forEach(function (elem) {
-      isInViewport(elem) ? elemsInView.push(elem) : elemsNotInView.push(elem);
-    });
+    animate(show(elems.inView));
 
-    animate(show(elemsInView));
-
-    animateWhenInView = elemsNotInView;
+    animateWhenInView = elems.notInView;
 
     checkScheduled = false;
+  }
+
+  function scheduleElemsCheck () {
+    setTimeout(animateElemsInView, 200);
+
+    checkScheduled = true;
   }
 
   function scrollHandler () {
@@ -175,9 +199,7 @@
     }
 
     if (animateWhenInView.length > 0) {
-      setTimeout(animateElemsInView, 200);
-
-      checkScheduled = true;
+      scheduleElemsCheck();
     } else {
       stopScrollHandler();
     }
@@ -188,7 +210,7 @@
 
     window.addEventListener('scroll', scrollHandler, false);
 
-    setTimeout(animateElemsInView, 200);
+    scheduleElemsCheck();
   }
 
   function stopScrollHandler () {
@@ -214,6 +236,7 @@
     show: show,
     animate: animate,
     isInViewport: isInViewport,
+    groupByViewport: groupByViewport,
 
     util: {
       slice: slice

@@ -111,7 +111,7 @@ postPage = "post-by-slug"
     fullWidth: true,
     indicators: true,
     onCycleTo: function (elem) {
-      animatedElements.forEach(element.hide);
+      element.hide(animatedElements);
 
       animatedElements = element.util.slice(elem.childNodes)
         .filter(element.has.data.animation)
