@@ -1,0 +1,139 @@
+// ==========================================================================
+// Materialize variables
+// ==========================================================================
+//
+// Table of Contents:
+//
+//  1. Colors
+//  2. Badges
+//  3. Buttons
+//  4. Cards
+//  5. Carousel
+//  6. Collapsible
+//  7. Chips
+//  8. Date + Time Picker
+//  9. Dropdown
+//  10. Forms
+//  11. Global
+//  12. Grid
+//  13. Navigation Bar
+//  14. Side Navigation
+//  15. Photo Slider
+//  16. Spinners | Loaders
+//  17. Tabs
+//  18. Tables
+//  19. Toasts
+//  20. Typography
+//  21. Footer
+//  22. Flow Text
+//  23. Collections
+//  24. Progress Bar
+
+
+
+// 1. Colors
+// ==========================================================================
+
+$primary-color: #311a91;
+$primary-color-dark: #000062;
+$primary-color-light: #6745c2;
+
+$secondary-color: #64b5f6;
+$secondary-color-dark: #2286c3;
+$secondary-color-light: #64b5f6;
+
+$success-color: color(green, base);
+$error-color: color(red, base);
+$link-color: color(light-blue, darken-1);
+
+// 2. Badges
+// ==========================================================================
+
+$badge-color: color(grey, darken-3);
+$badge-active-color: color(shades, white);
+
+// 3. Buttons
+// ==========================================================================
+
+// Shared styles
+$button-background-focus: $secondary-color-dark;
+
+// Disabled styles
+$button-disabled-background: #DFDFDF;
+$button-disabled-color: #9F9F9F;
+
+// Raised buttons
+$button-raised-background: $secondary-color;
+$button-raised-background-hover: $secondary-color-light;
+$button-raised-color: color(grey, darken-4);
+
+// 4. Cards
+// ==========================================================================
+
+// 5. Carousel
+// ==========================================================================
+
+// 6. Collapsible
+// ==========================================================================
+
+// 7. Chips
+// ==========================================================================
+
+// 8. Date + Time Picker
+// ==========================================================================
+
+// 9. Dropdown
+// ==========================================================================
+
+// 10. Forms
+// ==========================================================================
+
+// 11. Global
+// ==========================================================================
+
+// 12. Grid
+// ==========================================================================
+
+// 13. Navigation Bar
+// ==========================================================================
+
+// 14. Side Navigation
+// ==========================================================================
+
+// 15. Photo Slider
+// ==========================================================================
+
+// 16. Spinners | Loaders
+// ==========================================================================
+
+// 17. Tabs
+// ==========================================================================
+
+// 18. Tables
+// ==========================================================================
+
+// 19. Toasts
+// ==========================================================================
+
+// 20. Typography
+// ==========================================================================
+
+$font-stack: "Now", -apple-system, BlinkMacSystemFont, "Segoe UI", Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+
+// 21. Footer
+// ==========================================================================
+
+$footer-bg-color: $primary-color;
+
+// 22. Flow Text
+// ==========================================================================
+
+// 23. Collections
+// ==========================================================================
+
+$collection-active-bg-color: $primary-color-light;
+$collection-active-color: color(shades, white);
+$collection-link-color: $primary-color;
+
+// 24. Progress Bar
+// ==========================================================================

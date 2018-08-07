@@ -1,0 +1,34 @@
+.nav-logo {
+  height: $navbar-height-mobile;
+  position: absolute;
+  z-index: 10;
+
+  @media #{$medium-and-up} {
+    height: $navbar-height;
+  }
+
+  @media #{$large-and-up} {
+    position: initial;
+  }
+}
+
+.nav-logo img {
+  height: 100%;
+  padding: 4px;
+}
+
+.nav-contacts {
+  position: absolute;
+  text-align: center;
+  right: 0;
+  left: 0;
+
+  li {
+    display: inline;
+    float: none;
+  }
+  @media #{$large-and-up} {
+    position: initial;
+    float: right;
+  }
+}

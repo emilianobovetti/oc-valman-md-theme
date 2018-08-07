@@ -9,7 +9,9 @@ description = "Head"
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-  <title>{{ this.page.title }}</title>
+  <meta name="description" content="{{ this.page.meta_description }}">
+
+  <title>{{ this.page.meta_title ? this.page.meta_title : this.page.title }}</title>
 
   <link rel="icon" href="{{ '/favicon.ico'|app }}">
 

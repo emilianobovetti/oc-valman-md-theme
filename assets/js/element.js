@@ -17,7 +17,7 @@
       : undefined;
 
   function prop (val, key) {
-    if (val != null) return val[key]
+    if (val != null) return val[key];
   }
 
   function isEmpty (val) {
@@ -39,7 +39,7 @@
   function isIterable (val) {
     return val != null
       && typeof val.length === 'number'
-      && (val.hasOwnProperty(0) || val.length === 0);
+      && (has.ownProperty(val, 0) || val.length === 0);
   }
 
   function slice (val, begin, end) {
@@ -55,16 +55,20 @@
       : [ val ];
   }
 
+  has.ownProperty = function (val, key) {
+    return has.hasOwnProperty.call(val, key);
+  };
+
   get.data = function (elem) {
     return prop(elem, 'dataset');
   };
 
-  get.data.animation = function (elem) {
-    return prop(get.data(elem), 'animation');
-  };
-
   has.data = function (elem) {
     return typeof get.data(elem) === 'object';
+  };
+
+  get.data.animation = function (elem) {
+    return prop(get.data(elem), 'animation');
   };
 
   has.data.animation = function (elem) {

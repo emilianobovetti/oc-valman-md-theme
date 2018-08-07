@@ -8,7 +8,7 @@ robot_follow = "follow"
 [blogPosts]
 pageNumber = "{{ :page }}"
 categoryFilter = "news"
-postsPerPage = 2
+postsPerPage = 3
 noPostsMessage = "No posts found"
 sortOrder = "published_at desc"
 categoryPage = "news-by-category"
@@ -21,10 +21,24 @@ categoryPage = "news-by-category"
 [viewBag]
 ==
 
-{% set posts = blogPosts.posts %}
+{% for post in blogPosts.posts %}
+  {% if loop.first or loop.index % 2 == 0 %}
+    <div class="row">
+  {% endif %}
 
-{% partial 'blog/categories' subCategoriesBySlug = 'news' %}
+  {% if loop.first %}
+    <div class="col s12 l6">
+      {% partial 'blog/categories' subCategoriesBySlug = 'news' %}
+    </div>
+  {% endif %}
 
-{% partial 'blog/preview-posts-in-card' %}
+  <div class="col s12 l6">
+    {% partial 'blog/preview-post-in-card' post = post %}
+  </div>
+
+  {% if loop.first or loop.index % 2 == 1 %}
+    </div>
+  {% endif %}
+{% endfor %}
 
 {% partial 'blog/pagination' %}

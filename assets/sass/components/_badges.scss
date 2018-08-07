@@ -1,0 +1,7 @@
+span.badge {
+  color: $badge-color;
+}
+
+.active span.badge {
+  color: $badge-active-color;
+}

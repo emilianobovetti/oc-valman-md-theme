@@ -6,20 +6,30 @@ $node-modules-path: "#{$assets-path}/node_modules";
 $materialize-sass-path: "#{$node-modules-path}/materialize-css/sass";
 $materialize-components-path: "#{$materialize-sass-path}/components";
 
-// Color
+/*
+ * Color
+ * * * * */
 @import "#{$materialize-components-path}/color-variables";
 @import "#{$materialize-components-path}/color-classes";
 
-// Variables;
+/*
+ * Custom variables
+ * * * * * * * * * */
+@import "components/variables";
+
+/*
+ * Variables
+ * * * * * * */
 @import "#{$materialize-components-path}/variables";
 
-// Reset
+/*
+ * Reset
+ * * * * */
 @import "#{$materialize-components-path}/normalize";
 
-$primary-color: #3858a8;
-$footer-bg-color: $primary-color;
-
-// components
+/*
+ * Components
+ * * * * * * */
 @import "#{$materialize-components-path}/global";
 @import "#{$materialize-components-path}/badges";
 //@import "#{$materialize-components-path}/icons-material-design";
@@ -49,69 +59,11 @@ $footer-bg-color: $primary-color;
 //@import "#{$materialize-components-path}/datepicker";
 //@import "#{$materialize-components-path}/timepicker";
 
-@import "core/typography";
-
-.full-height {
-  height: 100vh;
-}
-
-.full-height-wo-nav {
-  height: 531px;
-  height: calc(100vh - #{$navbar-height-mobile});
-
-  @media #{$medium-and-up} {
-    height: calc(100vh - #{$navbar-height});
-  }
-}
-
-.fas.fa-phone,
-.fab.fa-whatsapp,
-.fas.fa-envelope {
-  color: #0ec244;
-}
-
-.nav-logo {
-  height: $navbar-height-mobile;
-
-  @media #{$medium-and-up} {
-    height: $navbar-height;
-  }
-}
-
-.nav-logo img {
-  height: 100%;
-  padding: 4px;
-}
-
-.nav-contacts {
-  position: absolute;
-  text-align: center;
-  right: 0;
-  left: 0;
-
-  li {
-    display: inline;
-    float: none;
-  }
-}
-
-@media #{$large-and-up} {
-  .nav-contacts {
-    position: initial;
-    float: right;
-  }
-
-  .nav-extended {
-    // TODO
-    //background-color: transparent;
-  }
-}
-
-.contact-email {
-  text-transform: none;
-}
-
-.btn .fab,
-.btn .fas {
-  line-height: inherit;
-}
+/*
+ * Custom components
+ * * * * * * * * * * */
+@import "components/typography";
+@import "components/global";
+@import "components/badges";
+@import "components/buttons";
+@import "components/navbar";

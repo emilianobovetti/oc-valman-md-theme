@@ -63,7 +63,7 @@ postPage = "post-by-slug"
 </style>
 
 <main>
-  <div id="home-carousel" class="carousel carousel-slider center full-height-wo-nav">
+  <div id="home-carousel" class="carousel carousel-slider center full-height-no-nav">
 
     <a id="carousel-left-indicator" class="carousel-fixed-item carousel-indicator">
       <i class="fas fa-angle-left"></i>
@@ -107,6 +107,8 @@ postPage = "post-by-slug"
 <script>
   var animatedElements = [];
 
+  var lastSlideChange = 0;
+
   var carousel = M.Carousel.init(document.getElementById('home-carousel'), {
     fullWidth: true,
     indicators: true,
@@ -117,6 +119,8 @@ postPage = "post-by-slug"
         .filter(element.has.data.animation)
         .map(element.show)
         .map(element.animate);
+
+      lastSlideChange = Date.now();
     }
   });
 
@@ -140,10 +144,13 @@ postPage = "post-by-slug"
       carousel.next();
     });
 
+  var minSlideInterval = 10000;
+
   setInterval(function () {
-    // TODO
-    //carousel.next();
-  }, 10000);
+    if (Date.now() - lastSlideChange >= minSlideInterval) {
+      carousel.next();
+    }
+  }, minSlideInterval);
 </script>
 {% endset %}
 

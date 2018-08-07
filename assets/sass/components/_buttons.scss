@@ -1,0 +1,11 @@
+.btn,
+.btn-floating {
+  &:focus {
+    background-color: $button-background-focus;
+  }
+}
+
+.btn .fab,
+.btn .fas {
+  line-height: inherit;
+}

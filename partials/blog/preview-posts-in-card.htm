@@ -3,6 +3,10 @@ description = "All posts in card preview"
 [viewBag]
 ==
 
-{% for post in posts %}
-  {% partial 'blog/preview-post-in-card' post = post %}
-{% endfor %}
+<div class="row">
+  {% for post in posts %}
+    <div class="col l6">
+      {% partial 'blog/preview-post-in-card' post = post %}
+    </div>
+  {% endfor %}
+</div>

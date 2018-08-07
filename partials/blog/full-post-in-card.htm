@@ -28,7 +28,7 @@ description = "Show a post"
           {% if not loop.last %}, {% endif %}
         {% endfor %}
 
-        <span class="right">{{ post.published_at|date('d M Y') }}</span>
+        <span class="right">{{ post.published_at|date('d F Y') }}</span>
       </div>
 
     </div>

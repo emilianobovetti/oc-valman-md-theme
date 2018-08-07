@@ -1,0 +1,25 @@
+.full-height {
+  height: 100vh;
+}
+
+.full-height-no-nav {
+  height: 531px;
+  height: calc(100vh - #{$navbar-height-mobile});
+
+  @media #{$medium-and-up} {
+    height: calc(100vh - #{$navbar-height});
+  }
+}
+
+.fas.fa-phone,
+.fab.fa-whatsapp {
+  color: color(green, accent-4);
+}
+
+.fas.fa-envelope {
+  color: color(red, lighten-1);
+}
+
+.contact-email {
+  text-transform: none;
+}
