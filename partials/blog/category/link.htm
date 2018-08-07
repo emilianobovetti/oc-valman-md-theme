@@ -2,25 +2,25 @@ description = "Category link"
 ==
 
 {% if category.slug == 'lista-nozze' %}
-  <a class="waves-effect btn-flat" href="{{ 'all-wedding-lists'|page }}">
+  <a class="waves-effect waves-orange btn-flat" href="{{ 'all-wedding-lists'|page }}">
     {{ category.name }}
   </a>
 {% endif %}
 
 {% if category.slug == 'crociere' %}
-  <a class="waves-effect btn-flat" href="{{ 'news-by-category'|page({ category: 'crociere' }) }}">
+  <a class="waves-effect waves-orange btn-flat" href="{{ 'news-by-category'|page({ category: 'crociere' }) }}">
     {{ category.name }}
   </a>
 {% endif %}
 
 {% if category.slug == 'tour-organizzati' %}
-  <a class="waves-effect btn-flat" href="{{ 'news-by-category'|page({ category: 'tour-organizzati' }) }}">
+  <a class="waves-effect waves-orange btn-flat" href="{{ 'news-by-category'|page({ category: 'tour-organizzati' }) }}">
     {{ category.name }}
   </a>
 {% endif %}
 
 {% if category.slug == 'last-minute' %}
-  <a class="waves-effect btn-flat" href="{{ 'news-by-category'|page({ category: 'last-minute' }) }}">
+  <a class="waves-effect waves-orange btn-flat" href="{{ 'news-by-category'|page({ category: 'last-minute' }) }}">
     {{ category.name }}
   </a>
 {% endif %}

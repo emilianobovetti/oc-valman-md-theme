@@ -9,3 +9,7 @@
 .btn .fas {
   line-height: inherit;
 }
+
+.btn-flat:focus {
+  background-color: $secondary-color-dark;
+}

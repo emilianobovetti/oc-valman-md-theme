@@ -38,9 +38,9 @@ $primary-color: #311a91;
 $primary-color-dark: #000062;
 $primary-color-light: #6745c2;
 
-$secondary-color: #64b5f6;
-$secondary-color-dark: #2286c3;
-$secondary-color-light: #64b5f6;
+$secondary-color: #ffff00;
+$secondary-color-dark: #fdd835;
+$secondary-color-light: #ffdd80;
 
 $success-color: color(green, base);
 $error-color: color(red, base);
@@ -56,19 +56,25 @@ $badge-active-color: color(shades, white);
 // ==========================================================================
 
 // Shared styles
-$button-background-focus: $secondary-color-dark;
+$button-background-focus: darken($primary-color-light, 10%); //$secondary-color-dark;
 
 // Disabled styles
 $button-disabled-background: #DFDFDF;
 $button-disabled-color: #9F9F9F;
 
 // Raised buttons
-$button-raised-background: $secondary-color;
-$button-raised-background-hover: $secondary-color-light;
-$button-raised-color: color(grey, darken-4);
+$button-raised-background:  $primary-color-light; //$secondary-color;
+$button-raised-background-hover: lighten($primary-color-light, 10%); //$secondary-color-light;
+$button-raised-color: color(shades, white);
+
+$button-floating-background-hover: red;
 
 // 4. Cards
 // ==========================================================================
+
+$card-bg-color: $secondary-color-light;
+$card-link-color: $primary-color; //color("orange", "accent-2");
+$card-link-color-light: $primary-color-light; //lighten($card-link-color, 20%);
 
 // 5. Carousel
 // ==========================================================================
