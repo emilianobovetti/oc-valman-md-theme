@@ -1,5 +1,5 @@
-title = "News"
-url = "/news/:page?|^[0-9]+$"
+title = "Offers"
+url = "/offers/:page?|^[0-9]+$"
 layout = "base"
 is_hidden = 0
 robot_index = "index"
@@ -7,16 +7,16 @@ robot_follow = "follow"
 
 [blogPosts]
 pageNumber = "{{ :page }}"
-categoryFilter = "news"
+categoryFilter = "offers"
 postsPerPage = 3
 noPostsMessage = "No posts found"
 sortOrder = "published_at desc"
-categoryPage = "news-by-category"
+categoryPage = "offers-by-category"
 postPage = "post-by-slug"
 
 [blogCategories]
 displayEmpty = true
-categoryPage = "news-by-category"
+categoryPage = "offers-by-category"
 
 [viewBag]
 ==
@@ -28,7 +28,7 @@ categoryPage = "news-by-category"
 
   {% if loop.first %}
     <div class="col s12 l6">
-      {% partial 'blog/categories' subCategoriesBySlug = 'news' %}
+      {% partial 'blog/categories' subCategoriesBySlug = 'offers' %}
     </div>
   {% endif %}
 

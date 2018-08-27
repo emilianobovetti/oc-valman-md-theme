@@ -1,5 +1,5 @@
-title = "News"
-url = "/news/:category/:page?"
+title = "Offers"
+url = "/offers/:category/:page?"
 layout = "base"
 is_hidden = 0
 robot_index = "index"
@@ -11,13 +11,13 @@ categoryFilter = "{{ :category }}"
 postsPerPage = 2
 noPostsMessage = "No posts found"
 sortOrder = "published_at desc"
-categoryPage = "news-by-category"
+categoryPage = "offers-by-category"
 postPage = "post-by-slug"
 
 [blogCategories]
 displayEmpty = true
 slug = "{{ :category }}"
-categoryPage = "news-by-category"
+categoryPage = "offers-by-category"
 
 [viewBag]
 ==
@@ -25,8 +25,8 @@ categoryPage = "news-by-category"
 {% set posts = blogPosts.posts %}
 
 {% partial 'blog/categories'
-  allCategoriesPage = 'all-news'
-  subCategoriesBySlug = 'news' %}
+  allCategoriesPage = 'all-offers'
+  subCategoriesBySlug = 'offers' %}
 
 {% partial 'blog/preview-posts-in-card' %}
 

@@ -15,22 +15,22 @@ items:
             isExternal: '0'
     -
         title: 'Liste nozze'
+        nesting: ''
         type: cms-page
+        url: ''
         code: ''
         reference: all-wedding-lists
+        cmsPage: ''
+        replace: ''
         viewBag:
             isHidden: '0'
             cssClass: ''
             isExternal: '0'
     -
-        title: News
-        nesting: ''
+        title: Offerte
         type: cms-page
-        url: ''
         code: ''
-        reference: all-news
-        cmsPage: ''
-        replace: ''
+        reference: all-offers
         viewBag:
             isHidden: '0'
             cssClass: ''
