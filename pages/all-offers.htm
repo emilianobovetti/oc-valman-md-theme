@@ -1,5 +1,5 @@
-title = "Offers"
-url = "/offers/:page?|^[0-9]+$"
+title = "Offerte"
+url = "/offerte/:page?|^[0-9]+$"
 layout = "base"
 is_hidden = 0
 robot_index = "index"
@@ -21,24 +21,28 @@ categoryPage = "offers-by-category"
 [viewBag]
 ==
 
-{% for post in blogPosts.posts %}
-  {% if loop.first or loop.index % 2 == 0 %}
-    <div class="row">
-  {% endif %}
-
-  {% if loop.first %}
-    <div class="col s12 l6">
-      {% partial 'blog/categories' subCategoriesBySlug = 'offers' %}
-    </div>
-  {% endif %}
-
+<div class="row">
   <div class="col s12 l6">
-    {% partial 'blog/preview-post-in-card' post = post %}
+    {% partial 'blog/categories' subCategoriesBySlug = 'offers' %}
+
+    {% for post in blogPosts.posts %}
+      {% if loop.index % 2 == 0 %}
+        {% partial 'blog/preview-post-in-card' post = post %}
+      {% endif %}
+    {% endfor %}
   </div>
 
-  {% if loop.first or loop.index % 2 == 1 %}
-    </div>
-  {% endif %}
-{% endfor %}
+  <div class="col s12 l6">
+    {% for post in blogPosts.posts %}
+      {% if loop.index % 2 == 1 %}
+        {% partial 'blog/preview-post-in-card' post = post %}
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
 
-{% partial 'blog/pagination' %}
+<div class="row">
+  <div class="col s12">
+    {% partial 'blog/pagination' %}
+  </div>
+</div>

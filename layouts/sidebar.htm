@@ -1,5 +1,7 @@
 description = "With Sidebar Column"
 
+[viewBag]
+
 [staticPage]
 useContent = 1
 default = 0
@@ -10,16 +12,13 @@ default = 0
 
 <main class="container">
   <div class="row">
-    <div class="col s12 m3">
-      {% partial 'sidebar' %}
-    </div>
+    <ul id="side-navigation" class="col s12 m3 section table-of-contents">
+    </ul>
 
     <div class="col s12 m9">
-      <h4>{{ this.page.title }}</h4>
-      <hr>
       {% page %}
     </div>
   </div>
 </main>
 
-{% partial 'site/foot' %}
+{% partial 'site/foot' scripts = [ 'assets/js/side-navigation.js' ] %}

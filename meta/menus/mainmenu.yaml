@@ -1,13 +1,11 @@
 name: MainMenu
 items:
     -
-        title: 'Chi siamo'
+        title: Informazioni
         nesting: '0'
         type: static-page
-        url: ''
         code: ''
         reference: chi-siamo
-        cmsPage: ''
         replace: '0'
         viewBag:
             isHidden: '0'
@@ -28,9 +26,13 @@ items:
             isExternal: '0'
     -
         title: Offerte
+        nesting: ''
         type: cms-page
+        url: ''
         code: ''
         reference: all-offers
+        cmsPage: ''
+        replace: ''
         viewBag:
             isHidden: '0'
             cssClass: ''

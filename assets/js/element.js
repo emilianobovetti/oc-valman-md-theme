@@ -7,6 +7,8 @@
 
   var div = document.createElement('div');
 
+  var body = document.body;
+
   var classList = div.classList;
 
   var animationEnd =
@@ -228,6 +230,33 @@
     }
   };
 
+  function scrollTo (elem) {
+    var yEnd = elem.offsetTop;
+    var yStart = body.scrollTop;
+    var yGap = yStart - yEnd;
+
+    var distance = Math.abs(yGap);
+    var duration = Math.log(distance) * 200;
+    var time = 0;
+    var deltaTime = 20;
+
+    var intervalId = setInterval(function () {
+      var timePercent = time / duration;
+      var yPercent = (1 - Math.cos(Math.PI * timePercent)) / 2;
+      yPercent = yPercent * yPercent;
+
+      if (time >= duration) {
+        body.scrollTop = yEnd;
+        clearInterval(intervalId);
+      } else {
+        body.scrollTop = yStart - yGap * yPercent;
+        time += deltaTime;
+      }
+    }, deltaTime);
+
+    return elem;
+  }
+
   return {
     get: get,
     has: has,
@@ -236,6 +265,7 @@
     hide: hide,
     show: show,
     animate: animate,
+    scrollTo: scrollTo,
     isInViewport: isInViewport,
     groupByViewport: groupByViewport,
 
