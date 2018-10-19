@@ -1,4 +1,5 @@
 static-pages:
-  index: {}
-  chi-siamo: {}
-  cataloghi: {}
+    index: {  }
+    chi-siamo: {  }
+    cataloghi: {  }
+    informazioni: {  }

@@ -5,7 +5,7 @@ items:
         nesting: '0'
         type: static-page
         code: ''
-        reference: chi-siamo
+        reference: informazioni
         replace: '0'
         viewBag:
             isHidden: '0'
