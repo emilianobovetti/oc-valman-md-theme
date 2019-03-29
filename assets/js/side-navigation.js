@@ -7,7 +7,7 @@
     link.appendChild(text);
     item.appendChild(link);
 
-    link.classList.add('pointer-on-hover');
+    element.add.class(link, 'pointer-on-hover');
 
     link.addEventListener('click', function (event) {
       element.scrollTo(headingElement);
@@ -55,7 +55,7 @@
       return;
     }
 
-    setTimeout(setActiveLink, 200);
+    setTimeout(setActiveLink, 100);
 
     checkScheduled = true;
   }

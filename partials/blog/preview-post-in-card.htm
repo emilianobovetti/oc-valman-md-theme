@@ -12,7 +12,7 @@ description = "Post in card preview"
 
       {{ post.title }}
     </span>
-    <span class="right">{{ post.published_at|date('d F Y') }}</span>
+    <span class="right">{{ post.published_at|date('j F Y') }}</span>
   </div>
 
   {% set image = post.featured_images.first %}
