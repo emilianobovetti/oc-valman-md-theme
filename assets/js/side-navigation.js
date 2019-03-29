@@ -2,7 +2,7 @@
   function createNavigationElement (headingElement) {
     var item = document.createElement('li');
     var link = document.createElement('a');
-    var text = document.createTextNode(headingElement.textContent);
+    var text = document.createTextNode(headingElement.textContent.trim());
 
     link.appendChild(text);
     item.appendChild(link);
