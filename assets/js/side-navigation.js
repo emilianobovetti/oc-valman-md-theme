@@ -19,49 +19,50 @@
   var sideNavigationElement = document.getElementById('side-navigation');
 
   var headingElements = document.querySelectorAll('h1, h2, h3, h4');
-  var navigationElements = [];
+  var navigationLinks = [];
 
   headingElements.forEach(function (heading) {
     var navigationElement = createNavigationElement(heading);
 
-    navigationElements.push(navigationElement);
+    navigationLinks.push(navigationElement.querySelector('a'));
     sideNavigationElement.appendChild(navigationElement);
   });
 
-  function inViewportIndex (elems) {
-    for (var index = 0; index < elems.length; index++) {
-      if (element.isInViewport(elems[index])) {
-        return index;
+  var checkScheduled = false;
+
+  function setActiveLink () {
+    var activeElemIdx = null;
+
+    headingElements.forEach(function (heading, idx) {
+      if (activeElemIdx == null && element.isInViewport(heading)) {
+        activeElemIdx = idx;
       }
-    }
+    });
 
-    return -1
-  }
-
-  function setActiveNavigationElement () {
-    var activeIndex = inViewportIndex(headingElements);
-
-    if (activeIndex < 0) return;
-
-    for (var index = 0; index < navigationElements.length; index++) {
-      link = navigationElements[index].querySelector('a');
-
-      if (index === activeIndex) {
-        element.add.class(link, 'active');
-      } else {
+    if (activeElemIdx != null) {
+      navigationLinks.forEach(function (link) {
         element.rem.class(link, 'active');
-      }
-    }
-  }
+      });
 
-  setActiveNavigationElement();
+      element.add.class(navigationLinks[activeElemIdx], 'active');
+    }
+
+    checkScheduled = false;
+  }
 
   function scrollHandler () {
-    // TODO: check timestamp
-    setActiveNavigationElement();
+    if (checkScheduled) {
+      return;
+    }
+
+    setTimeout(setActiveLink, 200);
+
+    checkScheduled = true;
   }
+
+  setActiveLink();
 
   window.addEventListener('scroll', scrollHandler, false);
 
-  M.Pushpin.init(sideNavigationElement, { top: 90 });
+  M.Pushpin.init(sideNavigationElement, { top: 90, offset: 0 });
 }());
