@@ -27,6 +27,7 @@
     display: inline;
     float: none;
   }
+
   @media #{$large-and-up} {
     position: initial;
     float: right;
@@ -34,7 +35,6 @@
 }
 
 nav {
-
   ul {
     a {
       font-weight: $navbar-font-weight;
