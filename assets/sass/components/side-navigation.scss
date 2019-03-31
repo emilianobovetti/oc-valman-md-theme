@@ -1,3 +1,11 @@
+#side-navigation {
+  display: none;
+
+  @media #{$medium-and-up} {
+    display: block;
+  }
+}
+
 .table-of-contents {
   a {
     color: $primary-color;
