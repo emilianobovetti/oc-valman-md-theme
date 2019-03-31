@@ -10,13 +10,12 @@ description = "Show a post"
       {% if image %}
         <div class="card-image">
            <img src="{{ image.path }}" alt="{{ image.description }}">
-           <span class="card-title">{{ post.title }}</span>
-        </div>
-      {% else %}
-        <div class="card-content">
-          <span class="card-title">{{ post.title }}</span>
         </div>
       {% endif %}
+
+      <div class="card-content">
+        <span class="card-title">{{ post.title }}</span>
+      </div>
 
       <div class="card-content">
         {{ post.content_html|raw }}
