@@ -32,3 +32,9 @@ description = "Category link"
     {{ category.name }}
   </a>
 {% endif %}
+
+{% if category.slug == 'selezionati-per-voi' %}
+  <a class="waves-effect btn-flat" href="{{ 'offers-by-category'|page({ category: 'selezionati-per-voi' }) }}">
+    {{ category.name }}
+  </a>
+{% endif %}
