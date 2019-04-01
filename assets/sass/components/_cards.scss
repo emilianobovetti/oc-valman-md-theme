@@ -5,8 +5,18 @@
     color: $card-title-color;
   }
 
-  .card-content img {
-    width: 100%;
-    margin: 1rem 0;
+  .card-content {
+    ul {
+      padding-left: 1rem;
+    }
+
+    ul li {
+      list-style-type: disc;
+    }
+
+    img {
+      width: 100%;
+      margin: 1rem 0;
+    }
   }
 }
