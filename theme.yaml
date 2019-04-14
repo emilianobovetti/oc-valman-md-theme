@@ -1,7 +1,7 @@
 name: 'valman-md'
 description: 'Valman Viaggi shining material theme.'
 author: Emiliano
-homepage: 'https://github.com/emilianobovetti/valman-md'
+homepage: 'https://github.com/emilianobovetti/oc-valman-md-theme'
 code: valman-md
 require:
     - RainLab.Pages
