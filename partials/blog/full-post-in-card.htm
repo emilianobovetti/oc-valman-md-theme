@@ -22,7 +22,7 @@ description = "Show a post"
       <div class="card-action">
         {% for category in post.categories %}
           {% partial 'blog/category/link' category = category %}
-          {% if not loop.last %}, {% endif %}
+          {% if not (loop.first or loop.last) %}, {% endif %}
         {% endfor %}
       </div>
 
