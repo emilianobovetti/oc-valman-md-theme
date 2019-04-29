@@ -15,20 +15,9 @@ postPage = "post-by-slug"
 {% partial 'site/head' %}
 {% partial 'site/nav/fixed' %}
 
-{variable name="title1" label="First Title" tab="Carousel" type="text"}{/variable}
-{variable name="tagline1" label="First Tagline" tab="Carousel" type="text"}{/variable}
-{variable name="carousel1" label="First Carousel Image" tab="Carousel" type="mediafinder" mode="image"}{/variable}
-
-{variable name="title2" label="Second Title" tab="Carousel" type="text"}{/variable}
-{variable name="tagline2" label="Second Tagline" tab="Carousel" type="text"}{/variable}
-{variable name="carousel2" label="Second Carousel Image" tab="Carousel" type="mediafinder" mode="image"}{/variable}
-
-{variable name="title3" label="Third Title" tab="Carousel" type="text"}{/variable}
-{variable name="tagline3" label="Third Tagline" tab="Carousel" type="text"}{/variable}
-{variable name="carousel3" label="Third Carousel Image" tab="Carousel" type="mediafinder" mode="image"}{/variable}
-
 <style>
   .carousel-item {
+    background-position: 60% 15%;
     background-size: cover;
   }
 
@@ -50,15 +39,45 @@ postPage = "post-by-slug"
   }
 
   #first-slide {
-    background-image: url("{{ carousel1|media }}");
+    background-image: url("{{ viewBag.carousel1|media }}");
   }
 
   #second-slide {
-    background-image: url("{{ carousel2|media }}");
+    background-image: url("{{ viewBag.carousel2|media }}");
   }
 
   #third-slide {
-    background-image: url("{{ carousel3|media }}");
+    background-image: url("{{ viewBag.carousel3|media }}");
+  }
+
+  .caption * {
+    text-shadow:
+     -1px -1px 0 #000,
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+       1px 1px 0 #000;
+  }
+
+  .caption h1 {
+    font-size: 3.2rem;
+  }
+
+  .carousel-item .caption {
+    position: relative;
+    max-width: 16rem;
+    margin: 0 auto;
+    color: white;
+    top: 3rem;
+  }
+
+  @media only screen and (min-width: 600px) {
+    .carousel-item .caption {
+      max-width: 30rem;
+    }
+  }
+
+  #second-slide .caption {
+    top: 25vh;
   }
 </style>
 
@@ -74,26 +93,31 @@ postPage = "post-by-slug"
     </a>
 
     <div class="carousel-item" id="first-slide" href="#first-slide">
-      <div class="caption center-align" data-animation="fadeInUp">
-        <h2>{{ title1 }}</h2>
-        <p class="white-text">{{ tagline1 }}</p>
+      <div class="caption">
+        <h1 data-animation="fadeInLeft">{{ viewBag.title1 }}</h1>
+        <h2 data-animation="fadeInLeft">{{ viewBag.tagline1 }}</h2>
       </div>
     </div>
+
     <div class="carousel-item" id="second-slide" href="#second-slide">
-      <h2 data-animation="jackInTheBox slow">{{ title2 }}</h2>
-      <p class="white-text" data-animation="rollIn slow">{{ tagline2 }}</p>
+      <div class="caption">
+        <h1 data-animation="fadeInRight">{{ viewBag.title2 }}</h1>
+        <h2 data-animation="fadeInRight">{{ viewBag.tagline2 }}</h2>
+      </div>
     </div>
+
     <div class="carousel-item" id="third-slide" href="#third-slide">
-      <div class="caption center-align" data-animation="zoomIn">
-        <h2>{{ title3 }}</h2>
-        <p class="white-text">{{ tagline3 }}</p>
+      <!-- TODO: fadeInDown slow? -->
+      <div data-animation="fadeInDown" class="caption">
+        <h1>{{ viewBag.title3 }}</h1>
+        <h2>{{ viewBag.tagline3 }}</h2>
       </div>
     </div>
 
   </div>
 
   <div class="container">
-    <h1>Ultime novità</h1>
+    <h2>Ultime novità</h2>
     <hr>
   </div>
 
@@ -115,7 +139,7 @@ postPage = "post-by-slug"
     onCycleTo: function (elem) {
       element.hide(animatedElements);
 
-      animatedElements = element.util.slice(elem.childNodes)
+      animatedElements = element.flattenChildren(elem)
         .filter(element.has.data.animation)
         .map(element.show)
         .map(element.animate);
@@ -144,13 +168,13 @@ postPage = "post-by-slug"
       carousel.next();
     });
 
-  var minSlideInterval = 10000;
+  var slideInterval = 10000;
 
   setInterval(function () {
-    if (Date.now() - lastSlideChange >= minSlideInterval) {
+    if (Date.now() - lastSlideChange >= slideInterval) {
       carousel.next();
     }
-  }, minSlideInterval);
+  }, slideInterval);
 </script>
 {% endset %}
 

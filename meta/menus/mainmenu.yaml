@@ -2,11 +2,9 @@ name: MainMenu
 items:
     -
         title: Informazioni
-        nesting: '0'
-        type: static-page
+        type: cms-page
         code: ''
         reference: informazioni
-        replace: '0'
         viewBag:
             isHidden: '0'
             cssClass: ''
@@ -39,13 +37,9 @@ items:
             isExternal: '0'
     -
         title: Cataloghi
-        nesting: '0'
-        type: static-page
-        url: ''
+        type: cms-page
         code: ''
         reference: cataloghi
-        cmsPage: ''
-        replace: '0'
         viewBag:
             isHidden: '0'
             cssClass: ''

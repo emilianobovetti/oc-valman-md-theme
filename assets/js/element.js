@@ -257,6 +257,20 @@
     return elem;
   }
 
+  function flattenChildren (elem) {
+    var children = [];
+
+    elem.childNodes.forEach(function (e) {
+      children = children.concat(flattenChildren(e));
+
+      if (e.nodeType !== Node.TEXT_NODE && e.textContent.trim() !== '') {
+        children.push(e);
+      }
+    });
+
+    return children;
+  }
+
   return {
     get: get,
     has: has,
@@ -268,6 +282,7 @@
     scrollTo: scrollTo,
     isInViewport: isInViewport,
     groupByViewport: groupByViewport,
+    flattenChildren: flattenChildren,
 
     util: {
       slice: slice

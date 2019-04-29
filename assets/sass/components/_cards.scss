@@ -5,6 +5,10 @@
     color: $card-title-color;
   }
 
+  .card-title + .right {
+    margin-bottom: 1rem;
+  }
+
   .card-content {
     ul {
       padding-left: 1rem;
