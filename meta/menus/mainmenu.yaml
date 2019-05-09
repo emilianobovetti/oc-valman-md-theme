@@ -4,7 +4,7 @@ items:
         title: Informazioni
         type: cms-page
         code: ''
-        reference: informazioni
+        reference: info
         viewBag:
             isHidden: '0'
             cssClass: ''
@@ -39,7 +39,7 @@ items:
         title: Cataloghi
         type: cms-page
         code: ''
-        reference: cataloghi
+        reference: catalogs
         viewBag:
             isHidden: '0'
             cssClass: ''

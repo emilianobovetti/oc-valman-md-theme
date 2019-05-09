@@ -38,3 +38,10 @@
 .pointer-on-hover:hover {
   cursor: pointer !important;
 }
+
+.valign-wrapper-xl {
+  @media #{$extra-large-and-up} {
+    display: flex;
+    align-items: center;
+  }
+}
