@@ -7,6 +7,11 @@ is_hidden = 0
 slug = "{{ :slug }}"
 categoryPage = "blog"
 ==
+function onEnd()
+{
+  $this->page->title = $this->components['blogPost']->post->title;
+}
+==
 
 {% set post = blogPost.post %}
 

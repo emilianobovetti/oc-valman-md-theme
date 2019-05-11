@@ -21,6 +21,27 @@ categoryPage = "offers-by-category"
 
 [viewBag]
 ==
+function onEnd()
+{
+  //$this->page->title =
+
+  $categoriesAndFirstChildren = $this
+      ->categories
+      ->flatMap(function ($category) {
+        return $category->children->merge([ $category ]);
+      });
+
+  $currentCategory = $categoriesAndFirstChildren
+    ->filter(function ($category) {
+      return $category->attributes['slug'] === $this->currentCategorySlug;
+    })
+    ->first();
+
+  if ($currentCategory) {
+    $this->page->title = $currentCategory->attributes['name'];
+  }
+}
+==
 
 <div class="row">
   <div class="col s12 l6">

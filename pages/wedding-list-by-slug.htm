@@ -10,6 +10,11 @@ slug = "{{ :slug }}"
 
 [viewBag]
 ==
+function onEnd()
+{
+  $this->page->title = $this->components['blogPost']->post->title;
+}
+==
 
 {% set post = blogPost.post %}
 
