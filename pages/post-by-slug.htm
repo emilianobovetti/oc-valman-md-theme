@@ -9,7 +9,9 @@ categoryPage = "blog"
 ==
 function onEnd()
 {
-  $this->page->title = $this->components['blogPost']->post->title;
+  $post = $this->components['blogPost']->post;
+
+  $this->page->title = $post->title;
 }
 ==
 

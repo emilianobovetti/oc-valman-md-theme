@@ -12,7 +12,9 @@ slug = "{{ :slug }}"
 ==
 function onEnd()
 {
-  $this->page->title = $this->components['blogPost']->post->title;
+  $post = $this->components['blogPost']->post;
+
+  $this->page->title = "Lista nozze {$post->title}";
 }
 ==
 
