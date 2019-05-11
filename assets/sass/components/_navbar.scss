@@ -24,8 +24,11 @@
   left: 0;
 
   li {
-    display: inline;
     float: none;
+
+    @media #{$medium-and-up} {
+      display: inline;
+    }
   }
 
   @media #{$large-and-up} {
