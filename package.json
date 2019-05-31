@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.8.2",
-    "animate.css": "^3.7.0",
+    "animate.css": "^3.7.1",
     "materialize-css": "^1.0.0"
   }
 }
